@@ -22,7 +22,9 @@ namespace PinedaLApuntesV2.Repositories
         public async Task<WeatherData> GetWeatherDataAsync(double latitude, double longitude)
         {
             HttpClient httpClient = new HttpClient();
-            string url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,relative_humidity_2m,rain";
+            string latitude_f = latitude.ToString().Replace(",", ".");
+            string longitud_f = longitude.ToString().Replace(",", ".");
+            string url = $"https://api.open-meteo.com/v1/forecast?latitude="+latitude_f+"&longitude="+longitud_f+"&current=temperature_2m,relative_humidity_2m,rain";
             var response =  await httpClient.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
             WeatherData data = JsonConvert.DeserializeObject<WeatherData>(result);
